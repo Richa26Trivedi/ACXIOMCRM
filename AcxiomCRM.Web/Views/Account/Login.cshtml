@@ -1,0 +1,57 @@
+@model AcxiomCRM.Web.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="auth-page">
+    <div class="card auth-card w-100" style="max-width: 1120px;">
+        <div class="row g-0">
+            <div class="col-lg-5 position-relative auth-visual">
+                <div class="d-flex align-items-center gap-3">
+                    <span class="brand-mark">A</span>
+                    <span class="fw-bold fs-5">AcxiomCRM</span>
+                </div>
+                <h1>Turn conversations into revenue.</h1>
+                <p>Organize every customer interaction, opportunity, and follow-up in one clear workspace.</p>
+                <div class="auth-feature"><span>✓</span><div><strong>Customer visibility</strong><br /><small>Follow the full lifecycle from lead to close.</small></div></div>
+                <div class="auth-feature"><span>✓</span><div><strong>Actionable reporting</strong><br /><small>Track performance and pipeline health in real time.</small></div></div>
+            </div>
+
+            <div class="col-lg-7 auth-form">
+                <div class="text-center text-lg-start">
+                    <span class="eyebrow">Welcome back</span>
+                    <h2>Sign in to your workspace</h2>
+                    <p class="subtitle">Enter your account details to continue.</p>
+                </div>
+
+                <form asp-action="Login" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label">Email address</label>
+                        <input asp-for="Email" class="form-control" autocomplete="email" placeholder="you@company.com" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label">Password</label>
+                        <input asp-for="Password" class="form-control" autocomplete="current-password" placeholder="Enter your password" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-between gap-3 mb-4">
+                        <div class="form-check mb-0">
+                            <input asp-for="RememberMe" class="form-check-input" />
+                            <label asp-for="RememberMe" class="form-check-label">Remember me</label>
+                        </div>
+                        <a asp-action="Register">Create an account</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts { <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script> <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script> }

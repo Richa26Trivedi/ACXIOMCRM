@@ -1,0 +1,32 @@
+# Build outputs
+bin/
+obj/
+publish/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Environment and secrets
+.env
+.env.*
+!/.env.example
+
+# Local databases
+*.mdf
+*.ldf
+
+# Test results
+TestResults/
+
+# NuGet packages
+packages/
+
+# OS files
+Thumbs.db
+Desktop.ini

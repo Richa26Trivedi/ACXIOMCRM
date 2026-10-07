@@ -1,0 +1,20 @@
+@model AcxiomCRM.Web.Controllers.ReportsViewModel
+@{ ViewData["Title"] = "Reports"; }
+<h1>Reports</h1>
+<div class="row g-3 mb-4"><div class="col-md-3"><label class="form-label">From</label><input type="date" id="fromDate" class="form-control" /></div><div class="col-md-3"><label class="form-label">To</label><input type="date" id="toDate" class="form-control" /></div><div class="col-md-3"><label class="form-label">Report Type</label><select id="reportType" class="form-select"><option value="sales">Sales Summary</option><option value="pipeline">Pipeline</option><option value="activities">Activities</option></select></div><div class="col-md-3 d-flex align-items-end"><button id="applyReport" class="btn btn-primary w-100">Generate</button></div></div>
+<div class="card"><div class="card-body"><canvas id="reportChart" height="100"></canvas></div></div>
+@section Scripts { <script src="https://cdn.jsdelivr.net/npm/chart.js"></script><script>
+const chartCtx = document.getElementById('reportChart');
+const buildChart = (type, data) => {
+  if (window.reportChart) window.reportChart.destroy();
+  window.reportChart = new Chart(chartCtx, { type: type === 'pipeline' ? 'doughnut' : 'bar', data: { labels: data.labels, datasets: [{ label: 'Value', data: data.values, backgroundColor: ['#4e73df','#1cc88a','#f6c23e','#e74a3b','#36b9cc'] }] }, options: { responsive: true, maintainAspectRatio: false } });
+};
+document.getElementById('applyReport').addEventListener('click', async () => {
+  const from = document.getElementById('fromDate').value;
+  const to = document.getElementById('toDate').value;
+  const type = document.getElementById('reportType').value;
+  const response = await fetch(`/Reports/Data?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&type=${encodeURIComponent(type)}`);
+  const result = await response.json();
+  buildChart(type, result);
+});
+</script> }

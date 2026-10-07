@@ -1,0 +1,7 @@
+@model AcxiomCRM.Web.Controllers.UserEditViewModel
+@{ ViewData["Title"] = "Manage User"; }
+<h1>Manage User</h1>
+<form asp-action="Edit" method="post">@Html.AntiForgeryToken()
+<div class="row g-3"><div class="col-md-6"><label class="form-label">Name</label><input value="@Model.User.FullName" class="form-control" readonly /></div><div class="col-md-6"><label class="form-label">Email</label><input value="@Model.User.Email" class="form-control" readonly /></div><div class="col-md-6"><label asp-for="SelectedRole" class="form-label"></label><select asp-for="SelectedRole" class="form-select" asp-items="@(new SelectList(Model.AvailableRoles))"></select></div><div class="col-md-6"><label asp-for="IsActive" class="form-label"></label><select asp-for="IsActive" class="form-select"><option value="true">Active</option><option value="false">Inactive</option></select></div></div>
+<button class="btn btn-primary mt-3">Save</button> <a class="btn btn-outline-secondary mt-3" asp-action="Index">Cancel</a>
+</form>

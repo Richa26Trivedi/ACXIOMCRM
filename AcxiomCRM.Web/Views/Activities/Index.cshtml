@@ -1,0 +1,9 @@
+@model IEnumerable<AcxiomCRM.Web.Models.Activity>
+@{ ViewData["Title"] = "Activities"; }
+<h1>Activities</h1>
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-3"><select name="status" class="form-select"><option value="">All statuses</option><option>Planned</option><option>Completed</option><option>Cancelled</option></select></div>
+    <div class="col-auto"><button class="btn btn-primary">Filter</button></div>
+    <div class="col-auto"><a class="btn btn-success" asp-action="Create">New Activity</a></div>
+</form>
+<table class="table table-striped"><thead><tr><th>Date</th><th>Type</th><th>Subject</th><th>Customer</th><th>Status</th><th></th></tr></thead><tbody>@foreach (var item in Model){<tr><td>@item.ActivityDate.ToString("g")</td><td>@item.ActivityType</td><td>@item.Subject</td><td>@item.Customer?.CustomerName</td><td>@item.Status</td><td>@if (item.Status != "Completed") { <form asp-action="Complete" asp-route-id="@item.Id" method="post">@Html.AntiForgeryToken()<button class="btn btn-sm btn-success">Complete</button></form> }</td></tr>}</tbody></table>

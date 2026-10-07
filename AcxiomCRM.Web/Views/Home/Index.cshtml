@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Welcome";
+}
+
+<section class="hero">
+    <div class="row align-items-center">
+        <div class="col-xl-8 position-relative">
+            <span class="badge">Customer relationship management</span>
+            <h1>Grow every relationship with clarity.</h1>
+            <p>AcxiomCRM brings customers, leads, opportunities, activities, and reports into one focused workspace for your sales team.</p>
+            <div class="hero-quick">
+                <a class="btn btn-primary" asp-controller="Dashboard" asp-action="Index">Open dashboard</a>
+                <a class="btn" asp-controller="Customers" asp-action="Index">Browse customers</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="feature-grid">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card feature-card h-100">
+                <div class="card-body">
+                    <div class="feature-icon">◎</div>
+                    <h4>Pipeline visibility</h4>
+                    <p class="text-muted mb-0">Follow leads through every stage and identify where attention is needed.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card feature-card h-100">
+                <div class="card-body">
+                    <div class="feature-icon">◌</div>
+                    <h4>Customer intelligence</h4>
+                    <p class="text-muted mb-0">Keep contact details, ownership, and history organized in one place.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card feature-card h-100">
+                <div class="card-body">
+                    <div class="feature-icon">▣</div>
+                    <h4>Performance insight</h4>
+                    <p class="text-muted mb-0">Measure outcomes with clear charts, reports, and activity tracking.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

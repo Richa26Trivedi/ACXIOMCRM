@@ -1,0 +1,5 @@
+@model IEnumerable<AcxiomCRM.Web.Models.Customer>
+@{ ViewData["Title"] = "Customers"; }
+<h1>Customers</h1>
+<form method="get" class="row g-2 mb-3"><div class="col"><input name="search" class="form-control" placeholder="Search name, email, phone or company" /></div><div class="col-auto"><button class="btn btn-primary">Search</button></div><div class="col-auto"><a class="btn btn-success" asp-action="Create">New Customer</a></div></form>
+<table class="table table-striped"><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Owner</th><th></th></tr></thead><tbody>@foreach (var item in Model){<tr><td>@item.CustomerName</td><td>@item.Email</td><td>@item.Phone</td><td>@item.Status</td><td>@item.AssignedTo</td><td><a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a> <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="d-inline">@Html.AntiForgeryToken()<button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete customer?');">Delete</button></form></td></tr>}</tbody></table>

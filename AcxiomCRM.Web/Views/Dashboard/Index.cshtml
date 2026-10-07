@@ -1,0 +1,127 @@
+@model AcxiomCRM.Web.Controllers.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">Overview</span>
+        <h1>Sales performance</h1>
+        <p>Track your team’s customer activity and revenue pipeline.</p>
+    </div>
+    <div class="page-actions">
+        <a class="btn btn-primary" asp-controller="Opportunities" asp-action="Create">+ New opportunity</a>
+        <a class="btn btn-outline-primary" asp-controller="Reports" asp-action="Index">View reports</a>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-sm-6 col-xl-3">
+        <div class="card stat-card h-100">
+            <div class="card-body">
+                <div class="stat-icon">◌</div>
+                <h6>Total customers</h6>
+                <h2>@Model.TotalCustomers</h2>
+                <small>Active customer base</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card stat-card h-100">
+            <div class="card-body">
+                <div class="stat-icon">◎</div>
+                <h6>Total leads</h6>
+                <h2>@Model.TotalLeads</h2>
+                <small>In active pipeline</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card stat-card h-100">
+            <div class="card-body">
+                <div class="stat-icon">◇</div>
+                <h6>Open opportunities</h6>
+                <h2>@Model.OpenOpportunities</h2>
+                <small>Currently progressing</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card stat-card h-100">
+            <div class="card-body">
+                <div class="stat-icon">▣</div>
+                <h6>Total pipeline</h6>
+                <h2>@Model.TotalPipeline.ToString("C")</h2>
+                <small>Projected revenue</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 g-4">
+    <div class="col-lg-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <div><h5 class="mb-1">Lead status</h5><small class="text-muted">Current lead distribution</small></div>
+                    <span class="badge bg-primary-subtle text-primary">Live</span>
+                </div>
+                <canvas id="leadStatusChart" height="240"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <div><h5 class="mb-1">Pipeline mix</h5><small class="text-muted">Opportunity stages</small></div>
+                    <span class="badge bg-success-subtle text-success">Updated</span>
+                </div>
+                <canvas id="pipelineChart" height="240"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <div><h5 class="mb-1">Monthly sales</h5><small class="text-muted">Revenue trend</small></div>
+                    <span class="badge bg-secondary-subtle text-secondary">12 months</span>
+                </div>
+                <canvas id="monthlySalesChart" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const leadStatusChart = new Chart(document.getElementById('leadStatusChart'), {
+    type: 'bar',
+    data: {
+        labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LeadStatusChart.Select(x => x.Label))),
+        datasets: [{ label: 'Leads', data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LeadStatusChart.Select(x => x.Value))), backgroundColor: ['#3458d9', '#5f7cf4', '#16b4a5', '#f0b429', '#e86b6b'], borderRadius: 8 }] }
+    ,
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: 'rgba(17, 24, 39, 0.06)' } }, x: { grid: { display: false } } } }
+});
+
+const pipelineChart = new Chart(document.getElementById('pipelineChart'), {
+    type: 'doughnut',
+    data: {
+        labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.PipelineChart.Select(x => x.Label))),
+        datasets: [{ data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.PipelineChart.Select(x => x.Value))), backgroundColor: ['#3458d9','#16b4a5','#f0b429','#e86b6b','#7b61ff'], borderWidth: 0 }] }
+    ,
+    options: { responsive: true, maintainAspectRatio: false, cutout: '62%', plugins: { legend: { position: 'bottom', labels: { boxWidth: 9, padding: 16 } } } }
+});
+
+const monthlySalesChart = new Chart(document.getElementById('monthlySalesChart'), {
+    type: 'line',
+    data: {
+        labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.MonthlySalesChart.Select(x => x.Label))),
+        datasets: [{ label: 'Monthly sales', data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.MonthlySalesChart.Select(x => x.Value))), borderColor: '#16b4a5', backgroundColor: 'rgba(22,180,165,0.12)', borderWidth: 3, pointRadius: 4, pointBackgroundColor: '#16b4a5', pointHoverRadius: 5, tension: 0.35, fill: true }] }
+    ,
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: false, grid: { color: 'rgba(17, 24, 39, 0.06)' } }, x: { grid: { display: false } } } }
+});
+</script>
+}

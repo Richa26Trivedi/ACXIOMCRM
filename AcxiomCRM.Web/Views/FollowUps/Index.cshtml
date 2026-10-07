@@ -1,0 +1,5 @@
+@model IEnumerable<AcxiomCRM.Web.Models.FollowUp>
+@{ ViewData["Title"] = "Follow-Ups"; }
+<h1>Follow-Ups</h1>
+<form method="get" class="row g-2 mb-3"><div class="col-md-3"><select name="status" class="form-select"><option value="">All statuses</option><option>Planned</option><option>Completed</option><option>Missed</option><option>Cancelled</option></select></div><div class="col-auto"><button class="btn btn-primary">Filter</button></div><div class="col-auto"><a class="btn btn-success" asp-action="Create">Schedule Follow-Up</a></div></form>
+<table class="table table-striped"><thead><tr><th>Date</th><th>Subject</th><th>Type</th><th>Status</th><th>Assigned</th><th></th></tr></thead><tbody>@foreach (var item in Model){<tr><td>@item.FollowUpDate.ToString("d")</td><td>@item.Subject</td><td>@item.Type</td><td>@item.Status</td><td>@item.AssignedTo</td><td>@if (item.Status == "Planned") { <form asp-action="Complete" asp-route-id="@item.Id" method="post">@Html.AntiForgeryToken()<button class="btn btn-sm btn-success">Complete</button></form> }</td></tr>}</tbody></table>

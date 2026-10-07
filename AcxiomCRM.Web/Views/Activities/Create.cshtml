@@ -1,0 +1,8 @@
+@model AcxiomCRM.Web.Models.Activity
+@{ ViewData["Title"] = "New Activity"; }
+<h1>New Activity</h1>
+<form asp-action="Create" method="post">@Html.AntiForgeryToken()<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="row g-3"><div class="col-md-4"><label asp-for="ActivityType" class="form-label"></label><select asp-for="ActivityType" class="form-select"><option>Call</option><option>Meeting</option><option>Email</option><option>Task</option></select></div><div class="col-md-4"><label asp-for="Subject" class="form-label"></label><input asp-for="Subject" class="form-control" /></div><div class="col-md-4"><label asp-for="ActivityDate" class="form-label"></label><input asp-for="ActivityDate" type="datetime-local" class="form-control" /></div><div class="col-md-6"><label asp-for="CustomerId" class="form-label"></label><select asp-for="CustomerId" class="form-select" asp-items="@(new SelectList(ViewBag.Customers, "Id", "CustomerName"))"><option value="">Select customer</option></select></div><div class="col-md-6"><label asp-for="LeadId" class="form-label"></label><select asp-for="LeadId" class="form-select" asp-items="@(new SelectList(ViewBag.Leads, "Id", "LeadName"))"><option value="">Select lead</option></select></div><div class="col-12"><label asp-for="Description" class="form-label"></label><textarea asp-for="Description" class="form-control"></textarea></div></div>
+<button class="btn btn-primary mt-3">Save</button> <a class="btn btn-outline-secondary mt-3" asp-action="Index">Cancel</a>
+</form>
+@section Scripts { <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script><script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script> }

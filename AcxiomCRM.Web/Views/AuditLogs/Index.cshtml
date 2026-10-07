@@ -1,0 +1,11 @@
+@model IEnumerable<AcxiomCRM.Web.Models.AuditLog>
+@{ ViewData["Title"] = "Audit Logs"; }
+<h1>Audit Logs</h1>
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-3"><input name="user" class="form-control" placeholder="User ID" /></div>
+    <div class="col-md-3"><select name="action" class="form-select"><option value="">All actions</option><option>Login</option><option>LoginFailed</option><option>RoleChanged</option><option>CustomerCreated</option><option>CustomerUpdated</option><option>CustomerDeleted</option><option>LeadCreated</option><option>LeadUpdated</option><option>LeadDeleted</option><option>OpportunityCreated</option><option>OpportunityUpdated</option><option>OpportunityDeleted</option></select></div>
+    <div class="col-md-3"><input name="from" type="date" class="form-control" /></div>
+    <div class="col-md-3"><input name="to" type="date" class="form-control" /></div>
+    <div class="col-auto"><button class="btn btn-primary">Filter</button></div>
+</form>
+<table class="table table-striped"><thead><tr><th>Timestamp</th><th>User</th><th>Action</th><th>Entity</th><th>Result</th></tr></thead><tbody>@foreach (var item in Model){<tr><td>@item.CreatedDate.ToString("g")</td><td>@item.UserId</td><td>@item.Action</td><td>@item.EntityName</td><td>@item.Result</td></tr>}</tbody></table>
